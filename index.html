@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Démo vitrine - Solution Digital</title>
+<style>
+  :root { --noir:#0D0D0D; --rouge:#CC0000; --gris:#666; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Arial, Helvetica, sans-serif; background:#f5f5f5; color:var(--noir); }
+  .hero { background:var(--noir); color:#fff; text-align:center; padding:28px 18px 22px; }
+  .hero img { height:54px; }
+  .hero h1 { margin:12px 0 4px; font-size:26px; }
+  .hero p { margin:0; color:#ccc; font-size:15px; }
+  .wa { display:inline-block; margin-top:14px; background:#25D366; color:#fff; text-decoration:none; padding:12px 20px; border-radius:24px; font-weight:bold; }
+  main { max-width:560px; margin:0 auto; padding:14px; }
+  .card { background:#fff; border-radius:14px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.07); margin-bottom:14px; }
+  h2 { margin:0 0 10px; font-size:18px; color:var(--rouge); }
+  .item { display:flex; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid #eee; }
+  .item:last-child { border-bottom:0; }
+  .item small { display:block; color:var(--gris); }
+  .price { font-weight:bold; white-space:nowrap; }
+  .info p { margin:6px 0; font-size:15px; }
+  .map { width:100%; height:180px; border:0; border-radius:10px; margin-top:8px; }
+  footer { text-align:center; color:var(--gris); font-size:12px; padding:14px; }
+  .note { background:#fff8e1; border-left:4px solid #f5b400; padding:10px 14px; font-size:13px; border-radius:8px; margin-bottom:14px; }
+</style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#CC0000">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+
+<div class="note">Démo : les informations ci-dessous sont des exemples. Pour un vrai client, il suffit de remplacer les textes dans la section « CONFIG » du fichier.</div>
+
+<header class="hero">
+  <img src="logo_solution_digital_original.png" alt="Solution Digital" onerror="this.style.display='none'">
+  <h1 id="nom"></h1>
+  <p id="slogan"></p>
+  <a class="wa" id="waBtn" href="#" target="_blank">Commander sur WhatsApp</a>
+</header>
+
+<main>
+  <div class="card">
+    <h2>Notre menu</h2>
+    <div id="menu"></div>
+  </div>
+
+  <div class="card info">
+    <h2>Horaires et adresse</h2>
+    <p id="horaires"></p>
+    <p id="adresse"></p>
+    <p id="tel"></p>
+  </div>
+
+  <footer>Page créée avec Solution Digital · « Gérez tout, simplement »</footer>
+</main>
+
+<script>
+  /* ===== CONFIG : à modifier pour chaque client ===== */
+  const CONFIG = {
+    nom: "Chez Exemple",
+    slogan: "Cuisine maison, livraison partout à Niamey",
+    whatsapp: "22700000000",          // numéro sans + ni espaces
+    horaires: "Lundi à samedi : 8h - 21h · Dimanche : 10h - 15h",
+    adresse: "Plateau, Niamey",
+    tel: "+227 00 00 00 00",
+    menu: [
+      { nom: "Sandwich viande hachée", detail: "avec frites", prix: "1 000 F" },
+      { nom: "Sandwich poulet", detail: "", prix: "800 F" },
+      { nom: "Boisson", detail: "au choix", prix: "300 F" }
+    ]
+  };
+  /* ================================================= */
+
+  document.getElementById('nom').textContent = CONFIG.nom;
+  document.getElementById('slogan').textContent = CONFIG.slogan;
+  document.getElementById('horaires').textContent = "🕐 " + CONFIG.horaires;
+  document.getElementById('adresse').textContent = "📍 " + CONFIG.adresse;
+  document.getElementById('tel').textContent = "📞 " + CONFIG.tel;
+  document.getElementById('waBtn').href =
+    "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent("Bonjour, je voudrais commander.");
+
+  const menu = document.getElementById('menu');
+  CONFIG.menu.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `<div>${m.nom}${m.detail ? '<small>' + m.detail + '</small>' : ''}</div><div class="price">${m.prix}</div>`;
+    menu.appendChild(div);
+  });
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}</script>
+</body>
+</html>
